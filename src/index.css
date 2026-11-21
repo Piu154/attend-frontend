@@ -63,3 +63,5 @@ input { font: inherit; color: var(--ink); background: var(--surface); border: 1p
 .badge.solid { background: var(--brand); color: #fff; }
 .badge.grey { background: #eee; color: #424242; }
 .reasons { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+
+.alert { background: var(--brand); color: #fff; border-radius: 12px; padding: 12px 16px; font-weight: 700; margin-bottom: 14px; }
