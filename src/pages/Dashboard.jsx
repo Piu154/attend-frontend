@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../auth';
-
+import { Link } from 'react-router-dom';
 export default function Dashboard() {
   const { user, restaurant, request, logout } = useAuth();
   const canManage = user?.role === 'owner' || user?.role === 'manager';
@@ -103,9 +103,14 @@ export default function Dashboard() {
             {restaurant?.name} · {user?.name} ({user?.role})
           </div>
         </div>
-        <button className="btn secondary" onClick={logout}>
-          Sign out
-        </button>
+            <div className="actions">
+          <Link className="btn" to="/requests">
+            Requests
+          </Link>
+          <button className="btn secondary" onClick={logout}>
+            Sign out
+          </button>
+        </div>
       </header>
 
       {error && <p className="error">{error}</p>}

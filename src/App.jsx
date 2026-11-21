@@ -3,6 +3,7 @@ import { useAuth } from './auth';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import Requests from './pages/Requests';
 import Admin from './pages/Admin';
 
 // Only lets you in when you are signed in, otherwise sends you to the login page
@@ -17,6 +18,14 @@ export default function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/admin" element={<Admin />} />
+      <Route
+        path="/requests"
+        element={
+          <Protected>
+            <Requests />
+          </Protected>
+        }
+      />
       <Route
         path="/"
         element={
