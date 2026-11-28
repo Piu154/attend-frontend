@@ -4,7 +4,7 @@ import { api } from './api';
 const AuthContext = createContext(null);
 const STORAGE_KEY = 'attend.session';
 
-// sessionStorage keeps you signed in on refresh, and signs you out when the tab is closed
+// sessionStorage keeps staff signed in on refresh, and signs them out when the tab is closed
 function loadSession() {
   try {
     return JSON.parse(sessionStorage.getItem(STORAGE_KEY));
@@ -16,8 +16,8 @@ function loadSession() {
 export function AuthProvider({ children }) {
   const [session, setSession] = useState(loadSession);
 
-  const login = useCallback(async (email, password) => {
-    const data = await api('/auth/login', { method: 'POST', body: { email, password } });
+  const login = useCallback(async (username, password) => {
+    const data = await api('/auth/login', { method: 'POST', body: { login: username, password } });
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     setSession(data);
   }, []);
@@ -27,7 +27,7 @@ export function AuthProvider({ children }) {
     setSession(null);
   }, []);
 
-  // like api(), but adds the login token and signs you out if the token has expired
+  // like api(), but adds the login token and signs out if the token has expired
   const request = useCallback(
     async (path, options = {}) => {
       try {
@@ -41,14 +41,7 @@ export function AuthProvider({ children }) {
   );
 
   const value = useMemo(
-    () => ({
-      token: session?.accessToken,
-      user: session?.user,
-      restaurant: session?.restaurant,
-      login,
-      logout,
-      request,
-    }),
+    () => ({ token: session?.accessToken, user: session?.user, restaurant: session?.restaurant, branch: session?.branch, login, logout, request }),
     [session, login, logout, request],
   );
 

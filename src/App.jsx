@@ -1,40 +1,33 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useAuth } from './auth';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Dashboard from './pages/Dashboard';
-import Requests from './pages/Requests';
-import Admin from './pages/Admin';
+import Scan from './pages/customer/Scan';
+import Track from './pages/customer/Track';
+import StaffLogin from './pages/staff/StaffLogin';
+import StaffBoard from './pages/staff/StaffBoard';
 
-// Only lets you in when you are signed in, otherwise sends you to the login page
+// Only lets staff in when they are signed in, otherwise sends them to the staff login
 function Protected({ children }) {
   const { token } = useAuth();
-  return token ? children : <Navigate to="/login" replace />;
+  return token ? children : <Navigate to="/staff/login" replace />;
 }
 
 export default function App() {
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/admin" element={<Admin />} />
+      {/* customers: no login, no app */}
+      <Route path="/t/:token" element={<Scan />} />
+      <Route path="/track/:token" element={<Track />} />
+      {/* staff */}
+      <Route path="/staff/login" element={<StaffLogin />} />
       <Route
-        path="/requests"
+        path="/staff"
         element={
           <Protected>
-            <Requests />
+            <StaffBoard />
           </Protected>
         }
       />
-      <Route
-        path="/"
-        element={
-          <Protected>
-            <Dashboard />
-          </Protected>
-        }
-      />
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<Navigate to="/staff" replace />} />
     </Routes>
   );
 }

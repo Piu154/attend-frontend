@@ -3,7 +3,10 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App.jsx';
 import { AuthProvider } from './auth.jsx';
+import { applySavedTheme } from './ui/ThemeToggle.jsx';
 import './index.css';
+
+applySavedTheme();
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
